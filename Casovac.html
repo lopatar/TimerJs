@@ -69,7 +69,10 @@
           audio.play();
 
           timeLabel.setAttribute('class', 'theEnd');
+          timeLabel.innerText = 'Čas vypršel!';
           clearInterval(intervalId);
+
+          return;
         }
 
         const minutesLeft = Math.trunc(totalSecondsLeft / 60);
