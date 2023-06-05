@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      body {
+        text-align: center;
+        align-content: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Časovač</h1>
+
+    <h1 id="cas" hidden="hidden">Zde bude čas</h1>
+    <hr>
+
+    <di>
+      <input type="number" min="1" max="" id="casForm">
+      <input type="button" value="Zadat čas" onclick="setTime()">
+    </di>
+  </body>
+  <!--suppress ES6ConvertVarToLetConst -->
+  <script type="text/javascript">
+      const timeLabel = document.getElementById('cas');
+
+      var totalSecondsLeft;
+      var intervalId;
+      function setTime()
+      {
+        clearInterval(intervalId);
+
+        const timeMinutes = document.getElementById('casForm').value;
+
+        if (timeMinutes < 1) {
+          alert('Proč?!');
+          return;
+        }
+
+        totalSecondsLeft = timeMinutes * 60;
+        intervalId = setInterval(processTime, 1000);
+        timeLabel.removeAttribute('hidden');
+      }
+
+      function processTime()
+      {
+        if (--totalSecondsLeft === 0) {
+          const audio = new Audio('sound.mp3')
+          audio.loop = false;
+          audio.play();
+
+          clearInterval(intervalId);
+        }
+
+        const minutesLeft = Math.trunc(totalSecondsLeft / 60);
+        const secondsLeft = totalSecondsLeft - (minutesLeft * 60);
+        timeLabel.innerText = `${minutesLeft} ${minutesLeft === 1 ? 'minuta' : 'minut'} ${secondsLeft} sekund`;
+      }
+  </script>
+</html>
