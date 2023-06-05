@@ -10,6 +10,11 @@
         align-content: center;
         justify-content: center;
       }
+
+      .theEnd
+      {
+        color: red;
+      }
     </style>
   </head>
   <body>
@@ -18,10 +23,19 @@
     <h1 id="cas" hidden="hidden">Zde bude čas</h1>
     <hr>
 
-    <di>
-      <input type="number" min="1" max="" id="casForm">
-      <input type="button" value="Zadat čas" onclick="setTime()">
-    </di>
+    <div>
+      <div>
+        <label for="casForm">
+          Počet minut
+        </label>
+      </div>
+      <div>
+        <input type="number" min="1" max="" id="casForm">
+      </div>
+      <div>
+        <input type="button" value="Zadat čas" onclick="setTime()">
+      </div>
+    </div>
   </body>
   <!--suppress ES6ConvertVarToLetConst -->
   <script type="text/javascript">
@@ -42,6 +56,8 @@
 
         totalSecondsLeft = timeMinutes * 60;
         intervalId = setInterval(processTime, 1000);
+
+        timeLabel.removeAttribute('class');
         timeLabel.removeAttribute('hidden');
       }
 
@@ -52,6 +68,7 @@
           audio.loop = false;
           audio.play();
 
+          timeLabel.setAttribute('class', 'theEnd');
           clearInterval(intervalId);
         }
 
