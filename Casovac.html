@@ -25,12 +25,28 @@
 
     <div>
       <div>
-        <label for="casForm">
+        <label for="timeHours">
+          Počet hodin
+        </label>
+      </div>
+      <div>
+        <input type="number" max="24" min="0" value="0" id="timeHours"/>
+      </div>
+      <div>
+        <label for="timeMinutes">
           Počet minut
         </label>
       </div>
       <div>
-        <input type="number" min="1" max="" id="casForm">
+        <input type="number" max="60" min="0" value="0" id="timeMinutes"/>
+      </div>
+      <div>
+        <label for="timeSeconds">
+          Počet sekund
+        </label>
+      </div>
+      <div>
+        <input type="number" max="60" min="0" value="0" id="timeSeconds"/>
       </div>
       <div>
         <input type="button" value="Zadat čas" onclick="setTime()">
@@ -47,18 +63,36 @@
       {
         clearInterval(intervalId);
 
-        const timeMinutes = document.getElementById('casForm').value;
+        const timeHours = parseInt(document.getElementById('timeHours').value);
+        const timeMinutes = parseInt(document.getElementById('timeMinutes').value);
+        const timeSeconds = parseInt(document.getElementById('timeSeconds').value);
 
-        if (timeMinutes < 1) {
+        const totalSeconds = (timeHours * 3600) + (timeMinutes * 60) + timeSeconds;
+
+        if (totalSeconds === 0)
+        {
           alert('Proč?!');
           return;
         }
 
-        totalSecondsLeft = timeMinutes * 60;
+        totalSecondsLeft = totalSeconds;
         intervalId = setInterval(processTime, 1000);
 
         timeLabel.removeAttribute('class');
         timeLabel.removeAttribute('hidden');
+      }
+
+      function sklonovani(number)
+      {
+        if (number === 1) {
+          return 'a';
+        }
+
+        if (number === 2 || number === 3 || number === 4) {
+          return 'y';
+        }
+
+        return '';
       }
 
       function processTime()
@@ -75,9 +109,12 @@
           return;
         }
 
-        const minutesLeft = Math.trunc(totalSecondsLeft / 60);
-        const secondsLeft = totalSecondsLeft - (minutesLeft * 60);
-        timeLabel.innerText = `${minutesLeft} ${minutesLeft === 1 ? 'minuta' : 'minut'} ${secondsLeft} sekund`;
+        const totalMinutesLeft = Math.trunc(totalSecondsLeft / 60);
+        const secondsLeft = totalSecondsLeft - (totalMinutesLeft * 60);
+        const hoursLeft = Math.trunc(totalMinutesLeft / 60);
+        const minutesLeft = totalMinutesLeft - (hoursLeft * 60);
+
+        timeLabel.innerText = `${hoursLeft} hodin${sklonovani(hoursLeft)} ${minutesLeft} minut${sklonovani(minutesLeft)} ${secondsLeft} sekund${sklonovani(secondsLeft)}`;
       }
   </script>
 </html>
