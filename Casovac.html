@@ -15,6 +15,13 @@
       {
         color: red;
       }
+
+      .square
+      {
+        height: 50px;
+        width: 50px;
+        font-size: 32px;
+      }
     </style>
   </head>
   <body>
@@ -24,33 +31,22 @@
     <hr>
 
     <div>
-      <div>
         <label for="timeHours">
           Počet hodin
         </label>
-      </div>
-      <div>
-        <input type="number" max="24" min="0" value="0" id="timeHours"/>
-      </div>
-      <div>
+        <input class="square" type="number" max="24" min="0" value="0" id="timeHours"/>
         <label for="timeMinutes">
           Počet minut
         </label>
-      </div>
-      <div>
-        <input type="number" max="60" min="0" value="0" id="timeMinutes"/>
-      </div>
-      <div>
+        <input class="square" onchange="updateValue(true)" type="number" max="60" min="0" value="0" id="timeMinutes"/>
         <label for="timeSeconds">
           Počet sekund
         </label>
-      </div>
-      <div>
-        <input type="number" max="60" min="0" value="0" id="timeSeconds"/>
-      </div>
-      <div>
+        <input class="square" onchange="updateValue(false)" type="number" max="60" min="0" value="0" id="timeSeconds"/>
+        <div>
+          <br/>
         <input type="button" value="Zadat čas" onclick="setTime()">
-      </div>
+        </div>
     </div>
   </body>
   <!--suppress ES6ConvertVarToLetConst -->
@@ -82,7 +78,39 @@
         timeLabel.removeAttribute('hidden');
       }
 
-      function sklonovani(number)
+      function updateValue(hours)
+      {
+          const timeHoursElement = document.getElementById('timeHours');
+          const timeMinutesElement = document.getElementById('timeMinutes');
+          const timeSecondsElement = document.getElementById('timeSeconds');
+
+          const timeHours = parseInt(timeHoursElement.value);
+          const timeMinutes = parseInt(timeMinutesElement.value);
+          const timeSeconds = parseInt(timeSecondsElement.value);
+
+          if (hours)
+          {
+              if (timeMinutes >= 60) {
+                  const hoursToAdd = timeMinutes / 60;
+                  const extraMinutes = Math.trunc((hoursToAdd % 1) * 60);
+
+                  timeHoursElement.value = timeHours + Math.trunc(hoursToAdd);
+                  timeMinutesElement.value = extraMinutes;
+              }
+          }
+          else
+          {
+              if (timeSeconds >= 60) {
+                  const minutesToAdd = timeSeconds / 60;
+                  const extraSeconds = Math.trunc((minutesToAdd % 1) * 60);
+
+                  timeMinutesElement.value = timeMinutes + Math.trunc(minutesToAdd);
+                  timeSecondsElement.value = extraSeconds;
+              }
+          }
+      }
+      
+      function inflectWord(number)
       {
         if (number === 1) {
           return 'a';
@@ -114,7 +142,7 @@
         const hoursLeft = Math.trunc(totalMinutesLeft / 60);
         const minutesLeft = totalMinutesLeft - (hoursLeft * 60);
 
-        timeLabel.innerText = `${hoursLeft} hodin${sklonovani(hoursLeft)} ${minutesLeft} minut${sklonovani(minutesLeft)} ${secondsLeft} sekund${sklonovani(secondsLeft)}`;
+        timeLabel.innerText = `${hoursLeft} hodin${inflectWord(hoursLeft)} ${minutesLeft} minut${inflectWord(minutesLeft)} ${secondsLeft} sekund${inflectWord(secondsLeft)}`;
       }
   </script>
 </html>
