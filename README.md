@@ -5,4 +5,4 @@ Simple javascript timer with simple UI. **UI is only in Czech language**
 Once the timer expires, a sound is played [sound.mp3](https://github.com/lopatar/TimerJs/blob/master/sound.mp3). This sound can be replaced to fit your needs :)
 
 # Try me
-(timer.lopatar.dev)[https://timer.lopatar.dev]
+[timer.lopatar.dev](https://timer.lopatar.dev)
