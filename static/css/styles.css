@@ -1,0 +1,23 @@
+body {
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.theEnd {
+    color: red;
+}
+
+.square {
+    height: 50px;
+    width: 50px;
+    font-size: 32px;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}

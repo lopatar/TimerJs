@@ -1,161 +1,38 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Časovač</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-      body {
-        text-align: center;
-        align-content: center;
-        justify-content: center;
-      }
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="static/css/styles.css" rel="stylesheet" type="text/css"/>
+    <script async src="static/js/app.js" type="text/javascript"></script>
+</head>
+<body>
+<h1>Časovač</h1>
 
-      .theEnd
-      {
-        color: red;
-      }
+<h1 hidden="hidden" id="cas">Zde bude čas</h1>
+<hr>
 
-      .square
-      {
-        height: 50px;
-        width: 50px;
-        font-size: 32px;
-      }
-
-      footer 
-      {
-          position: fixed;
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          text-align: center;
-      }
-      
-    </style>
-  </head>
-  <body>
-    <h1>Časovač</h1>
-
-    <h1 id="cas" hidden="hidden">Zde bude čas</h1>
-    <hr>
-
+<div>
+    <label for="timeHours">
+        Počet hodin
+    </label>
+    <input class="square" id="timeHours" max="24" min="0" type="number" value="0"/>
+    <label for="timeMinutes">
+        Počet minut
+    </label>
+    <input class="square" id="timeMinutes" max="60" min="0" onchange="updateValue(true)" type="number" value="0"/>
+    <label for="timeSeconds">
+        Počet sekund
+    </label>
+    <input class="square" id="timeSeconds" max="60" min="0" onchange="updateValue(false)" type="number" value="0"/>
     <div>
-        <label for="timeHours">
-          Počet hodin
-        </label>
-        <input class="square" type="number" max="24" min="0" value="0" id="timeHours"/>
-        <label for="timeMinutes">
-          Počet minut
-        </label>
-        <input class="square" onchange="updateValue(true)" type="number" max="60" min="0" value="0" id="timeMinutes"/>
-        <label for="timeSeconds">
-          Počet sekund
-        </label>
-        <input class="square" onchange="updateValue(false)" type="number" max="60" min="0" value="0" id="timeSeconds"/>
-        <div>
-          <br/>
-        <input type="button" value="Zadat čas" onclick="setTime()">
-        </div>
+        <br/>
+        <input onclick="setTime()" type="button" value="Zadat čas">
     </div>
-    <footer>
-        <a href="https://github.com/lopatar/TimerJs" target="_blank">Source code</a>
-    </footer>
-  </body>
-  <!--suppress ES6ConvertVarToLetConst -->
-  <script type="text/javascript">
-      const timeLabel = document.getElementById('cas');
-
-      var totalSecondsLeft;
-      var intervalId;
-      function setTime()
-      {
-        clearInterval(intervalId);
-
-        const timeHours = parseInt(document.getElementById('timeHours').value);
-        const timeMinutes = parseInt(document.getElementById('timeMinutes').value);
-        const timeSeconds = parseInt(document.getElementById('timeSeconds').value);
-
-        const totalSeconds = (timeHours * 3600) + (timeMinutes * 60) + timeSeconds;
-
-        if (totalSeconds === 0)
-        {
-          alert('Proč?!');
-          return;
-        }
-
-        totalSecondsLeft = totalSeconds;
-        intervalId = setInterval(processTime, 1000);
-
-        timeLabel.removeAttribute('class');
-        timeLabel.removeAttribute('hidden');
-      }
-
-      function updateValue(hours)
-      {
-          const timeHoursElement = document.getElementById('timeHours');
-          const timeMinutesElement = document.getElementById('timeMinutes');
-          const timeSecondsElement = document.getElementById('timeSeconds');
-
-          const timeHours = parseInt(timeHoursElement.value);
-          const timeMinutes = parseInt(timeMinutesElement.value);
-          const timeSeconds = parseInt(timeSecondsElement.value);
-
-          if (hours)
-          {
-              if (timeMinutes >= 60) {
-                  const hoursToAdd = timeMinutes / 60;
-                  const extraMinutes = Math.trunc((hoursToAdd % 1) * 60);
-
-                  timeHoursElement.value = timeHours + Math.trunc(hoursToAdd);
-                  timeMinutesElement.value = extraMinutes;
-              }
-          }
-          else
-          {
-              if (timeSeconds >= 60) {
-                  const minutesToAdd = timeSeconds / 60;
-                  const extraSeconds = Math.trunc((minutesToAdd % 1) * 60);
-
-                  timeMinutesElement.value = timeMinutes + Math.trunc(minutesToAdd);
-                  timeSecondsElement.value = extraSeconds;
-              }
-          }
-      }
-      
-      function inflectWord(number)
-      {
-        if (number === 1) {
-          return 'a';
-        }
-
-        if (number === 2 || number === 3 || number === 4) {
-          return 'y';
-        }
-
-        return '';
-      }
-
-      function processTime()
-      {
-        if (--totalSecondsLeft === 0) {
-          const audio = new Audio('sound.mp3')
-          audio.loop = false;
-          audio.play();
-
-          timeLabel.setAttribute('class', 'theEnd');
-          timeLabel.innerText = 'Čas vypršel!';
-          clearInterval(intervalId);
-
-          return;
-        }
-
-        const totalMinutesLeft = Math.trunc(totalSecondsLeft / 60);
-        const secondsLeft = totalSecondsLeft - (totalMinutesLeft * 60);
-        const hoursLeft = Math.trunc(totalMinutesLeft / 60);
-        const minutesLeft = totalMinutesLeft - (hoursLeft * 60);
-
-        timeLabel.innerText = `${hoursLeft} hodin${inflectWord(hoursLeft)} ${minutesLeft} minut${inflectWord(minutesLeft)} ${secondsLeft} sekund${inflectWord(secondsLeft)}`;
-      }
-  </script>
+</div>
+<footer>
+    <a href="https://github.com/lopatar/TimerJs" target="_blank">Source code</a>
+</footer>
+</body>
 </html>
