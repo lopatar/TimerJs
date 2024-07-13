@@ -1,4 +1,7 @@
 const timeLabel = document.getElementById('cas');
+const timeHoursElement = document.getElementById('timeHours');
+const timeMinutesElement = document.getElementById('timeMinutes');
+const timeSecondsElement = document.getElementById('timeSeconds');
 
 var totalSecondsLeft;
 var intervalId;
@@ -9,13 +12,9 @@ var extraTimeUnits;
 function setTime() {
     clearInterval(intervalId);
 
-    const hoursTextbox = document.getElementById('timeHours');
-    const minutesTextbox = document.getElementById('timeMinutes');
-    const secondsTextbox = document.getElementById('timeSeconds');
-
-    const timeHours = parseInt(hoursTextbox.value);
-    const timeMinutes = parseInt(minutesTextbox.value);
-    const timeSeconds = parseInt(secondsTextbox.value);
+    const timeHours = parseInt(timeHoursElement.value);
+    const timeMinutes = parseInt(timeMinutesElement.value);
+    const timeSeconds = parseInt(timeSecondsElement.value);
 
     const totalSeconds = (timeHours * 3600) + (timeMinutes * 60) + timeSeconds;
 
@@ -30,16 +29,12 @@ function setTime() {
     timeLabel.removeAttribute('class');
     timeLabel.removeAttribute('hidden');
 
-    hoursTextbox.value = 0;
-    minutesTextbox.value = 0;
-    secondsTextbox.value = 0;
+    timeHoursElement.value = 0;
+    timeMinutesElement.value = 0;
+    timeSecondsElement.value = 0;
 }
 
 function updateValue(hours) {
-    const timeHoursElement = document.getElementById('timeHours');
-    const timeMinutesElement = document.getElementById('timeMinutes');
-    const timeSecondsElement = document.getElementById('timeSeconds');
-
     const timeHours = parseInt(timeHoursElement.value);
     const timeMinutes = parseInt(timeMinutesElement.value);
     const timeSeconds = parseInt(timeSecondsElement.value);
