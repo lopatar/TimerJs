@@ -9,9 +9,13 @@ var extraTimeUnits;
 function setTime() {
     clearInterval(intervalId);
 
-    const timeHours = parseInt(document.getElementById('timeHours').value);
-    const timeMinutes = parseInt(document.getElementById('timeMinutes').value);
-    const timeSeconds = parseInt(document.getElementById('timeSeconds').value);
+    const hoursTextbox = document.getElementById('timeHours');
+    const minutesTextbox = document.getElementById('timeMinutes');
+    const secondsTextbox = document.getElementById('timeSeconds');
+
+    const timeHours = parseInt(hoursTextbox.value);
+    const timeMinutes = parseInt(minutesTextbox.value);
+    const timeSeconds = parseInt(secondsTextbox.value);
 
     const totalSeconds = (timeHours * 3600) + (timeMinutes * 60) + timeSeconds;
 
@@ -25,6 +29,10 @@ function setTime() {
 
     timeLabel.removeAttribute('class');
     timeLabel.removeAttribute('hidden');
+
+    hoursTextbox.value = 0;
+    minutesTextbox.value = 0;
+    secondsTextbox.value = 0;
 }
 
 function updateValue(hours) {
@@ -70,7 +78,7 @@ function inflectWord(number) {
 
 function processTime() {
     if (--totalSecondsLeft === 0) {
-        const audio = new Audio('sound.mp3')
+        const audio = new Audio('static/audio/sound.mp3');
         audio.loop = false;
         audio.play();
 
