@@ -80,11 +80,12 @@ function processTime() {
     if (--totalSecondsLeft === 0) {
         const audio = new Audio('static/audio/sound.mp3');
         audio.loop = false;
-        audio.play();
 
-        timeLabel.setAttribute('class', 'theEnd');
-        timeLabel.innerText = 'Čas vypršel!';
-        clearInterval(intervalId);
+        audio.play().then(() => {
+            timeLabel.setAttribute('class', 'theEnd');
+            timeLabel.innerText = 'Čas vypršel!';
+            clearInterval(intervalId);
+        });
 
         return;
     }
