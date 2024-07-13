@@ -21,11 +21,11 @@
     <label for="timeMinutes">
         Počet minut
     </label>
-    <input class="square" id="timeMinutes" max="60" min="0" onchange="updateValue(true)" type="number" value="0"/>
+    <input class="square" id="timeMinutes" max="59" min="0" onchange="updateValue(true)" type="number" value="0"/>
     <label for="timeSeconds">
         Počet sekund
     </label>
-    <input class="square" id="timeSeconds" max="60" min="0" onchange="updateValue(false)" type="number" value="0"/>
+    <input class="square" id="timeSeconds" max="59" min="0" onchange="updateValue(false)" type="number" value="0"/>
     <div>
         <br/>
         <input onclick="setTime()" type="button" value="Zadat čas">
